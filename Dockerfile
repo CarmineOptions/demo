@@ -1,5 +1,5 @@
 # Build project
-FROM node:18-alpine AS build
+FROM node:16.15 AS build
 
 WORKDIR /
 COPY ["package.json", "package-lock.json", "./"]

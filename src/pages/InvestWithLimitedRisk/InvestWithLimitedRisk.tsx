@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Chart from "./Chart";
 import { generateGraphData } from "./calculations";
 import { calculate } from "../../utils/calculations/options";
@@ -11,6 +11,15 @@ const InvestWithLimitedRisk = () => {
   const [timeframe, setTimeframe] = useState(30);
   const [text, setText] = useState("");
   const [graphData, setGraphData] = useState({});
+  const graphRef = useRef<null | HTMLDivElement>(null);
+
+  const executeScroll = () => {
+    setTimeout(() => {
+      if (graphRef?.current?.scrollIntoView) {
+        graphRef.current.scrollIntoView({behavior: "smooth", block: "center"});
+      }
+    }, 150);
+  };
 
   const handleButtonClick = async () => {
     const { price, premium, strike } = await calculate(
@@ -29,6 +38,7 @@ const InvestWithLimitedRisk = () => {
     const gd = generateGraphData(price, premium, strike);
     console.log(gd);
     setGraphData(gd);
+    executeScroll();
   };
 
   return (
@@ -94,12 +104,15 @@ const InvestWithLimitedRisk = () => {
       >
         Calculate
       </button>
+      <div ref={graphRef}>
+
       {!!Object.keys(graphData).length && (
         <>
           <p>{text}</p>
           <Chart data={graphData} />
         </>
       )}
+      </div>
     </div>
   );
 };
