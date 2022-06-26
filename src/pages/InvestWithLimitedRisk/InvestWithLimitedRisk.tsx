@@ -16,7 +16,10 @@ const InvestWithLimitedRisk = () => {
   const executeScroll = () => {
     setTimeout(() => {
       if (graphRef?.current?.scrollIntoView) {
-        graphRef.current.scrollIntoView({behavior: "smooth", block: "center"});
+        graphRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }
     }, 150);
   };
@@ -28,12 +31,19 @@ const InvestWithLimitedRisk = () => {
       timeframe
     );
     const d = getDateNMonthsFromNow(mapDaysToMonths(timeframe));
-    const finalDate = d.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const finalDate = d.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
     setText(
       `At the price $${price} for ${crypto} and maximum loss of ${maxLoss}%, your strike price would be $${Math.round(
         strike
-      )} and the premium would be $${Math.round(premium)}. The option will mature on ${finalDate}.`
+      )} and the premium would be $${Math.round(
+        premium
+      )}. The option will mature on ${finalDate}.`
     );
     const gd = generateGraphData(price, premium, strike);
     console.log(gd);
@@ -105,13 +115,21 @@ const InvestWithLimitedRisk = () => {
         Calculate
       </button>
       <div ref={graphRef}>
-
-      {!!Object.keys(graphData).length && (
-        <>
-          <p>{text}</p>
-          <Chart data={graphData} />
-        </>
-      )}
+        {!!Object.keys(graphData).length && (
+          <>
+            <p>{text}</p>
+            <Chart data={graphData} />
+            <p>
+              Did we pique your interest? <a
+                href="https://twitter.com/CarmineOptions"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Follow us on Twitter
+              </a> and we'll keep you updated!
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
