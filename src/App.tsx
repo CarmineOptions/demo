@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import InvestWithLimitedRisk from "./pages/InvestWithLimitedRisk/InvestWithLimitedRisk";
 import ModelB from "./pages/ModelB/ModelB";
 import ModelC from "./pages/ModelC/ModelC";
+import FourOFour from "./pages/404/404";
 
 const App = () => (
   <Router>
@@ -17,6 +18,7 @@ const App = () => (
           <Route path="/limit-risk" element={<InvestWithLimitedRisk />} />
           <Route path="/hedge" element={<ModelB />} />
           <Route path="/staked-capital" element={<ModelC />} />
+          <Route path="*" element={<FourOFour />} />
         </Routes>
       </main>
       <Footer />
