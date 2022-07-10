@@ -13,8 +13,23 @@ export const getPremium = (price: number, strikePrice: number, days: number, typ
     type,
   );
 
+export const roundReasonably = (n: number): number => {
+  const breakPoints = [
+    [100, 5],
+    [1000, 100],
+  ];
+  let res = n;
+  breakPoints.forEach(([breakPoint, rounder]) => {
+    if (n >= breakPoint) {
+      res = Math.round(n / rounder) * rounder;
+    }
+  });
+
+  return res;
+};
+
 export const getStrikePrice = (price: number, maxLoss: number) => {
-  return price * (1 - maxLoss / 100);
+  return roundReasonably(price * (1 - maxLoss / 100));
 };
 
 export const calculate = async (crypto: CustomCoinList, maxLoss: number, timeframe: number) => {
